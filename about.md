@@ -3,8 +3,6 @@ layout: page
 title: About
 permalink: /about/
 ---
-<img src = "/assets/avatar.png" alt = "avatar" title = "my avatar" width = "200" height = "200" align = "middle">
-<br>
 
 Edward Ding
 --------
