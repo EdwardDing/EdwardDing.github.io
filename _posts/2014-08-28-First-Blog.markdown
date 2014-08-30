@@ -3,6 +3,7 @@ layout: post
 title:	"Hello World"
 date:	2014-08-29 10:00:00
 categories: freewrite
+excerpt: "Some classic words from Steve Jobs"
 ---
 Hello World :]
 

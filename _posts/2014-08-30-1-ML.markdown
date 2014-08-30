@@ -1,0 +1,13 @@
+---
+layout: post
+title:	"Machine Learning1"
+data: 2014-08-30 20:10:00
+categories: note
+excerpt: "Machine Learning: Linear Regression & Normal Equation"
+---
+
+Test whether `LaTex` works on `Jekyll`
+
+Here is the ***Normal Equation***:
+
+$$\mathbf{X}^T\mathbf{X}\Theta = \mathbf{X}^Ty$$
