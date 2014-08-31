@@ -5,9 +5,81 @@ data: 2014-08-30 20:10:00
 categories: note
 excerpt: "Machine Learning: Linear Regression & Normal Equation"
 ---
+###Linear Regression
 
-Test whether `LaTex` works on `Jekyll`
+------------------
+define: \\( {X}_0 = 1 \\)
 
-Here is the ***Normal Equation***:
+The work of `Linear Regression` is to find \\(\theta\\) to minimize \\(J(\theta)\\), where:
 
-$$\mathbf{X}^T\mathbf{X}\Theta = \mathbf{X}^Ty$$
+$$ h(x) = \sum_{i=0}^{n}\theta_ix_i = {\theta}^TX $$
+
+$$ J(\theta) = \frac{1}{2}\sum_{i=1}^{n}({h}_\theta({X}^{(i)}) - y^{(i)})^2 $$
+
+###Gradient Descend
+
+----------------
+The most direct way to get best \\(\theta\\) is to repeat iteration to reduce \\(J(\theta)\\). This method is called `Gradient Descend`
+
+The common formula for this method is to update \\(\theta\\) by \\(\theta_i := \theta_i - \alpha\cdot \frac{\partial }{\partial\theta_i}J(\theta)\\)
+
+For smaller training set, we use `Batch Gradient Descend`
+
+$$ \theta_i := \theta_i - \alpha\sum_{j=1}^{n}({h}_\theta({X}^{(i)}) - y^{(i)})^2X_i^{(j)} $$
+
+In this algorithm, we have to use **ALL** \\(m\\) training examples to implement only 1 update.
+
+For larget training set, we use `Incremental Gradient Descend`
+
+$$ \theta_i := \theta_i - \alpha({h}_\theta({X}^{(i)}) - y^{(i)})^2X_i^{(j)} $$
+
+We only use 1 training example for each update, which is much more faster.
+
+> However, IGD cannot ensure to converge the exact best solution, you may only get the approximate solution.
+
+###Normal Equation
+
+--------------
+Let's put all training input into a big matrix \\(X\\), and all training output into \\(y\\)
+
+$$
+X = \begin{bmatrix}
+(X^{(1)})^T\\ 
+...\\ 
+(X^{(m)})^T
+\end{bmatrix}_{m\times (n+1)}
+
+Y = \begin{bmatrix}
+y^{(1)}\\ 
+...\\ 
+y^{(m)}
+\end{bmatrix}_{m\times 1}
+$$
+
+Thus:
+
+$$
+X\theta - y = \begin{bmatrix}
+h_\theta(X^{(1)}) - y^{(1)}\\ 
+...\\ 
+h_\theta(X^{(m)}) - y^{(m)}
+\end{bmatrix} = J(\theta)
+$$
+
+Inorder to get the best \\(\theta\\), we neet to set the `Gradient` to \\(0\\): 
+
+$$
+\bigtriangledown_{\theta}J\overset{set}{=}\overrightarrow{0}
+$$
+
+After some [calculations](/note/2014/08/31/Prove-Normal-Equation/)), we can simplify the equations to:
+
+$$
+X^TX\theta = X^Ty
+$$
+
+That is what we called `Normal Equation`. With this equation, we can easily get the best \\(\theta\\):
+
+$$
+\theta = (X^TX)^{-1}X^Ty
+$$
