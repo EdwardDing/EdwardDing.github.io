@@ -2,7 +2,7 @@
 layout: post
 title: "Verilog on Sublime Text 2"
 data: 2014-09-01 10:13:00
-excerpt: "This post will only exist for 24 hours then deleted automatically. Take your time Guoxiang Han, an d enjoy your life in UCB"
+excerpt: "This post will only exist for 24 hours then deleted automatically. Take your time Guoxiang Han, and enjoy your life in UCB"
 ---
 
 ###Install Sublime Text 2
