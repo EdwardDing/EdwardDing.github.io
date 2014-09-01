@@ -63,7 +63,13 @@ X\theta - y = \begin{bmatrix}
 h_\theta(X^{(1)}) - y^{(1)}\\ 
 ...\\ 
 h_\theta(X^{(m)}) - y^{(m)}
-\end{bmatrix} = J(\theta)
+\end{bmatrix}
+$$
+
+As \\(A^TA = \sum{Z_i}^2\\), we can represent \\(J(\theta)\\) as following:
+
+$$
+J(\theta) = \frac{1}{2}(X\theta - y)^T(X\theta - y)
 $$
 
 Inorder to get the best \\(\theta\\), we neet to set the `Gradient` to \\(0\\): 
