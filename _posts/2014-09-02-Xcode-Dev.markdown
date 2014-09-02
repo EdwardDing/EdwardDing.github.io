@@ -10,17 +10,21 @@ excerpt: A tutorial to test your APP on real devices without Apple Developer Cer
 
 -----------------
 Open Keychain Access from Launchpad, select `Keychain Access > Certificate Assistant > Create a Certificate`. 
-![1](/assets/XcodeTutorial/1.png)
 
+<a href="/assets/XcodeTutorial/1.png">
+<img src="/assets/XcodeTutorial/1.png" alt="1" style="border:1px #d5d5e9 solid"/>
+</a>
 Then in the ***Name*** field, type in EXACTLY ***iPhone Developer*** and select ***Let me override defaults*** like shown in the picture:
 
-![2](/assets/XcodeTutorial/2.png)
-
+<a href="/assets/XcodeTutorial/2.png">
+<img src="/assets/XcodeTutorial/2.png" alt="2" style="border:1px #d5d5e9 solid"/>
+</a>
 
 Click continue until this interface. Stop for a second, select ***Code Signing*** instead of ***Email Protection*** and click continue till the end.
 
-![3](/assets/XcodeTutorial/3.png)
-
+<a href="/assets/XcodeTutorial/3.png">
+<img src="/assets/XcodeTutorial/3.png" alt="3" style="border:1px #d5d5e9 solid"/>
+</a>
 Now, your certificate as a developer has been succesfully created, well done!
 
 ###Step 2: Modify Xcode Configure Files
@@ -36,7 +40,9 @@ If it says that the folder can't be found, check whether your Xcode has installe
 
 Make a copy of ***SDKsettings.plist*** to your desktop (As you do not have permission to modify it while Xcode is open), open it, set the value ***CODE_SIGNING_REQUIRED*** and ***ENTITLEMENTS_REQUIRED*** as ***NO***. Save and cover the original file. When you covering the original file, make sure Xcode is closed COMPLETELY.
 
-![4](/assets/XcodeTutorial/4.png)
+<a href="/assets/XcodeTutorial/4.png">
+<img src="/assets/XcodeTutorial/4.png" alt="4" style="border:1px #d5d5e9 solid"/>
+</a>
 
 
 > NOTE: For those new to OSX this could be a little bit tricky as Xcode is acutally still running in the background if you simply 'close' it by click the red button on the left top. There are two ways close it completely: one is to open Xcode and press `command + q`, the other is to right-click Xcode icon below and select ***quit***.
@@ -52,7 +58,9 @@ One more files to modify, goto
 
 Open ***info.plist*** and replace all ***XCiPhoneOSCodeSignContext*** with ***XCCodeSignContext*** (all 3). To do so, you can press `command + f` to find and replace. After modification, move back to cover the original file.
 
-![5](/assets/XcodeTutorial/5.png)
+<a href="/assets/XcodeTutorial/5.png">
+<img src="/assets/XcodeTutorial/5.png" alt="5" style="border:1px #d5d5e9 solid"/>
+</a>
 
 ###Step 3: Create a script
 
@@ -77,11 +85,14 @@ Check if there is a python file named ***gen_entitlements.py***, if not, modify 
 
 Open your project, in ***Build Settings***, select your project name in ***Target*** ,expand ***Code Signing***, change all options to ***Don't Code Sign***.
 
-<img src="/assets/XcodeTutorial/6.png" alt="6" width="100%%" height="100%" />
-
+<a href="/assets/XcodeTutorial/6.png">
+<img src="/assets/XcodeTutorial/6.png" alt="6" width="100%" height="100%" style="border:1px #d5d5e9 solid"/>
+</a>
 Swith to ***Project***, do the same things, but this time, change all options to ***iPhone Developer***
 
-<img src="/assets/XcodeTutorial/7.png" alt="6" width="100%" height="100%" />
+<a href="/assets/XcodeTutorial/7.png">
+<img src="/assets/XcodeTutorial/7.png" alt="7" width="100%" height="100%" style="border:1px #d5d5e9 solid"/>
+</a>
 
 Swith back to ***Target***, in ***Build Phase***, from the top menu bar choose `Editor > Add Build Phase > Add Run Script Build Phase` and copy these lines:
 
@@ -99,13 +110,16 @@ Finally, the most exicting part!
 
 Plug in your iPhone, open Xcode. There should be a pop-up window like this:
 
-<img src="/assets/XcodeTutorial/8.png" alt="8" width="100%" height="100%" />
-
+<a href="/assets/XcodeTutorial/8.png">
+<img src="/assets/XcodeTutorial/8.png" alt="8" width="100%" height="100%" style="border:1px #d5d5e9 solid"/>
+</a>
 Select ***User for Develpoment***, then a green dot should come up next to your device. If not, re-plug in your device. Now, your device are ready.
 
 Open your project, switch the ***Simulator*** to your device, and build it.
 
-![9](/assets/XcodeTutorial/9.png)
+<a href="/assets/XcodeTutorial/9.png">
+<img src="/assets/XcodeTutorial/9.png" alt="9" style="border:1px #d5d5e9 solid"/>
+</a>
 
 Wait, wait. I know you are excited, but you have to wait for about 5 seconds' building (don't worry if your screen is completely black, this is normal). After this long waiting time your app will run automatically on your device.
 
