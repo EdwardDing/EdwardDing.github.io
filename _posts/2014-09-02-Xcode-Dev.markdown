@@ -1,0 +1,116 @@
+---
+layout: post
+title: "Xcode Tutorial: Test on Real Devices"
+date: 2014-09-02 11:22
+categories: tutorial
+excerpt: A tutorial to test your APP on real devices without Apple Developer Certificate. You can only use this way for non-commercial use.
+---
+
+###Step 1: Create A Certificate
+
+-----------------
+Open Keychain Access from Launchpad, select `Keychain Access > Certificate Assistant > Create a Certificate`. 
+![1](/assets/XcodeTutorial/1.png)
+
+Then in the ***Name*** field, type in EXACTLY ***iPhone Developer*** and select ***Let me override defaults*** like shown in the picture:
+
+![2](/assets/XcodeTutorial/2.png)
+
+
+Click continue until this interface. Stop for a second, select ***Code Signing*** instead of ***Email Protection*** and click continue till the end.
+
+![3](/assets/XcodeTutorial/3.png)
+
+Now, your certificate as a developer has been succesfully created, well done!
+
+###Step 2: Modify Xcode Configure Files
+
+----------------
+Open Finder, press `command + shift + g` and type in
+
+~~~
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/
+~~~
+
+If it says that the folder can't be found, check whether your Xcode has installed iOS7.1 sdk. 
+
+Make a copy of ***SDKsettings.plist*** to your desktop (As you do not have permission to modify it while Xcode is open), open it, set the value ***CODE_SIGNING_REQUIRED*** and ***ENTITLEMENTS_REQUIRED*** as ***NO***. Save and cover the original file. When you covering the original file, make sure Xcode is closed COMPLETELY.
+
+![4](/assets/XcodeTutorial/4.png)
+
+
+> NOTE: For those new to OSX this could be a little bit tricky as Xcode is acutally still running in the background if you simply 'close' it by click the red button on the left top. There are two ways close it completely: one is to open Xcode and press `command + q`, the other is to right-click Xcode icon below and select ***quit***.
+
+<br>
+***Congratulations! Half way to success now!***
+
+One more files to modify, goto
+
+~~~
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/
+~~~
+
+Open ***info.plist*** and replace all ***XCiPhoneOSCodeSignContext*** with ***XCCodeSignContext*** (all 3). To do so, you can press `command + f` to find and replace. After modification, move back to cover the original file.
+
+![5](/assets/XcodeTutorial/5.png)
+
+###Step 3: Create a script
+
+----------------
+This script will be called automatically each time you build a project to generate a signature file.
+
+To create the script, you can download a shell file [here](/assets/XcodeTutorial/cmd.sh). The easiest way to run it is drag the sh file into ***Terminal*** and hit return.
+
+Goto:
+
+~~~
+/Applications/Xcode.app/Contents/Developer/iphoneentitlements
+~~~
+
+Check if there is a python file named ***gen_entitlements.py***, if not, modify the shell file yourself and run again.
+
+###Step 4: Modify Your Xcode Project
+
+--------------------
+
+> NOTE: You have to do this step everytime you build a new project to you iPhone. Step 1 ~ 3 need be done only once.
+
+Open your project, in ***Build Settings***, select your project name in ***Target*** ,expand ***Code Signing***, change all options to ***Don't Code Sign***.
+
+<img src="/assets/XcodeTutorial/6.png" alt="6" width="100%%" height="100%" />
+
+Swith to ***Project***, do the same things, but this time, change all options to ***iPhone Developer***
+
+<img src="/assets/XcodeTutorial/7.png" alt="6" width="100%" height="100%" />
+
+Swith back to ***Target***, in ***Build Phase***, from the top menu bar choose `Editor > Add Build Phase > Add Run Script Build Phase` and copy these lines:
+
+~~~ shell
+export CODESIGN_ALLOCATE=/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/codesign_allocate
+if [ "${PLATFORM_NAME}" == "iphoneos" ] || [ "${PLATFORM_NAME}" == "ipados" ]; then /Applications/Xcode.app/Contents/Developer/iphoneentitlements/gen_entitlements.py "my.company.${PROJECT_NAME}" "${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/${PROJECT_NAME}.xcent";
+codesign -f -s "iPhone Developer" --entitlements "${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/${PROJECT_NAME}.xcent" "${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/";
+fi
+~~~
+
+###Step 5: Build and Run
+
+-----------------
+Finally, the most exicting part!
+
+Plug in your iPhone, open Xcode. There should be a pop-up window like this:
+
+<img src="/assets/XcodeTutorial/8.png" alt="8" width="100%" height="100%" />
+
+Select ***User for Develpoment***, then a green dot should come up next to your device. If not, re-plug in your device. Now, your device are ready.
+
+Open your project, switch the ***Simulator*** to your device, and build it.
+
+![9](/assets/XcodeTutorial/9.png)
+
+Wait, wait. I know you are excited, but you have to wait for about 5 seconds' building (don't worry if your screen is completely black, this is normal). After this long waiting time your app will run automatically on your device.
+
+No more words, enjoy it!
+
+If you have any questions, contact me by my email below. I'm willing to help you.
+
+
