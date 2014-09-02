@@ -10,3 +10,6 @@ github_username:  EdwardDing
 # Build settings
 markdown: kramdown
 permalink: pretty
+
+# Other settings
+comments: true

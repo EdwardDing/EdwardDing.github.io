@@ -6,6 +6,8 @@ categories: note
 excerpt: "A prove of how Normal Equation works"
 ---
 
+{% include custom/mathjax.html %}
+
 ###Preparation
 
 --------------

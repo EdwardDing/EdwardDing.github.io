@@ -6,6 +6,8 @@ categories: note
 excerpt: Introduction of Non-parametric Learning Algorithm, Locally Weight Linear Regression, a probabilitic interpretation to explain why using Least Square as a standard, and our first classification algorithm. Logestic Regression.
 ---
 
+{% include custom/mathjax.html %}
+
 ###Non-parametric Learning Algorithm
 
 --------------

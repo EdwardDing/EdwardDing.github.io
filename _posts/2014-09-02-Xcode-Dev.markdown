@@ -3,8 +3,12 @@ layout: post
 title: "Xcode Tutorial: Test on Real Devices"
 date: 2014-09-02 11:22
 categories: tutorial
-excerpt: A tutorial to test your APP on real devices without Apple Developer Certificate. You can only use this way for non-commercial use.
+excerpt: A tutorial to test your APP on real devices without Apple Developer Certificate. You can only use this tutorial for non-commercial use.
 ---
+
+There are 5 steps in this tutorial and will take you about 10 minutes to finish everything.
+
+> If you are a dedicated developer who loves iOS developing as much as I am but do not have that much money for a Developer Certificate to test your App on real devices, then this passage is just for you. However, before moving on, you have to know that this tutorial can ONLY be used for testing purposes.
 
 ###Step 1: Create A Certificate
 
@@ -128,6 +132,5 @@ Wait, wait. I know you are excited, but you have to wait for about 5 seconds' bu
 
 No more words, enjoy it!
 
-If you have any questions, contact me by my email below. I'm willing to help you.
-
+If you have any questions, just leave messages below. I'm willing to help you.
 

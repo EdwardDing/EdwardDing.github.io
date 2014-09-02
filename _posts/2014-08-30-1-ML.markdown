@@ -5,6 +5,10 @@ date: 2014-08-30 20:10:00
 categories: note
 excerpt: "Machine Learning: Linear Regression & Normal Equation"
 ---
+
+{% include custom/mathjax.html %}
+
+
 ###Linear Regression
 
 ------------------
