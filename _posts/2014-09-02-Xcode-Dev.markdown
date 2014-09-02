@@ -14,6 +14,7 @@ Open Keychain Access from Launchpad, select `Keychain Access > Certificate Assis
 <a href="/assets/XcodeTutorial/1.png">
 <img src="/assets/XcodeTutorial/1.png" alt="1" style="border:1px #d5d5e9 solid"/>
 </a>
+
 Then in the ***Name*** field, type in EXACTLY ***iPhone Developer*** and select ***Let me override defaults*** like shown in the picture:
 
 <a href="/assets/XcodeTutorial/2.png">
@@ -25,6 +26,7 @@ Click continue until this interface. Stop for a second, select ***Code Signing**
 <a href="/assets/XcodeTutorial/3.png">
 <img src="/assets/XcodeTutorial/3.png" alt="3" style="border:1px #d5d5e9 solid"/>
 </a>
+
 Now, your certificate as a developer has been succesfully created, well done!
 
 ###Step 2: Modify Xcode Configure Files
@@ -43,7 +45,6 @@ Make a copy of ***SDKsettings.plist*** to your desktop (As you do not have permi
 <a href="/assets/XcodeTutorial/4.png">
 <img src="/assets/XcodeTutorial/4.png" alt="4" style="border:1px #d5d5e9 solid"/>
 </a>
-
 
 > NOTE: For those new to OSX this could be a little bit tricky as Xcode is acutally still running in the background if you simply 'close' it by click the red button on the left top. There are two ways close it completely: one is to open Xcode and press `command + q`, the other is to right-click Xcode icon below and select ***quit***.
 
@@ -88,6 +89,7 @@ Open your project, in ***Build Settings***, select your project name in ***Targe
 <a href="/assets/XcodeTutorial/6.png">
 <img src="/assets/XcodeTutorial/6.png" alt="6" width="100%" height="100%" style="border:1px #d5d5e9 solid"/>
 </a>
+
 Swith to ***Project***, do the same things, but this time, change all options to ***iPhone Developer***
 
 <a href="/assets/XcodeTutorial/7.png">
@@ -113,6 +115,7 @@ Plug in your iPhone, open Xcode. There should be a pop-up window like this:
 <a href="/assets/XcodeTutorial/8.png">
 <img src="/assets/XcodeTutorial/8.png" alt="8" width="100%" height="100%" style="border:1px #d5d5e9 solid"/>
 </a>
+
 Select ***User for Develpoment***, then a green dot should come up next to your device. If not, re-plug in your device. Now, your device are ready.
 
 Open your project, switch the ***Simulator*** to your device, and build it.
