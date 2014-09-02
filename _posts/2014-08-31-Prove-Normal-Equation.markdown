@@ -1,7 +1,7 @@
 ---
 layout: post
 title:	"Prove of Normal Equation"
-data: 2014-08-31 10:16:00
+date: 2014-08-31 10:16:00
 categories: note
 excerpt: "A prove of how Normal Equation works"
 ---

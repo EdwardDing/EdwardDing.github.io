@@ -1,0 +1,141 @@
+---
+layout: post
+title: "Machine Learning 2"
+date: 2014-09-01 21:48
+categories: note
+excerpt:Introduction of Non-parametric Learning Algorithm, Locally Weight Linear Regression, a probabilitic interpretation to explain why using Least Square as a standard, and our first classification algorithm. Logestic Regression.
+---
+
+###Non-parametric Learning Algorithm
+
+--------------
+An example of Parametric Learning Algorithm is `Linear Regression`. Our work is to find a set of parameters \\(\theta\\) to fit the data.
+
+While, in Non-parametric Learning Algorithm, there is no definitive amount of parameters. The number of parameters grows with m. A good example is `Locally Weight Lenear Regression`, abbreviate as `LWR`.
+
+###Locally Weight Linear Regression
+
+-------------
+Comparision between LR and LWR:
+
+LR: Fit \\(\theta\\) to minimize \\(\sum(y^{(i)} - \theta^Tx^{(i)})^2\\)
+
+LWR: Fit \\(\theta\\) to minimize \\(\sum w^{(i)}(y^{(i)} - \theta^Tx^{(i)})^2\\)
+
+where \\(w^{(i)} = exp(-\frac{(x^{(i)} - x)^2}{2\tau^2})\\)
+
+To select \\(w^{(i)}\\), we need to make sure that when \\(x^{(i)} - x \rightarrow 0\\), \\(w^{(i)} \rightarrow 1\\). By adding \\(w^{(i)}\\) we can weaken the effect of points that are far away from \\(x\\).
+
+***Note***: \\(\tau\\) is called `Bandwidth Parameter`. When \\(\tau\\) is large, the function is more smooth and flat, while when it is small, the function is tall and thin.
+
+> Advantages:This algorithm can reduce the possibility of overfit or underfit but cannot eliminate them totaly because of the selection of \\(\tau\\)). <br><br>
+> Disadvantages: You have to fit the whole data set again every prediction.
+
+###Why Using Least Square As the Standard
+
+-------------
+To answer this question, we need to make some assumptions first. Assume \\(y^{(i)} = \theta^Tx^{(i)} + \varepsilon^{(i)}\\) where \\(\varepsilon ^{(i)}\\) is the `Error Term Captures` who confirms to `Normal Distribution`: \\( \varepsilon ^{(i)} \sim N(0,\sigma^2)\\)
+
+Thus:
+
+$$
+P(\varepsilon^{(i)}) = \frac{1}{\sqrt{2\pi}\sigma}exp(-\frac{(\varepsilon^{(i)})^2}{2\sigma^2}) \\[3ex]
+\therefore
+P(y^{(i)} \mid x^{(i)};\theta) = \frac{1}{\sqrt{2\pi}\sigma}exp(-\frac{(y^{(i)} - \theta^Tx^{(i)})^2}{2\sigma^2}) \\[3ex]
+\Rightarrow y^{(i)}  \mid  x^{(i)};\theta \sim N(\theta^Tx^{(i)},\sigma^2)
+$$
+
+> Note: \\(\theta\\) here is not a random variable. It is fixed, but we just don't know what the exact value it is. \\( (x^{(i)};\theta) \\) in the formula can be read as : given \\( x^{(i)} \\) ***parameterized*** by \\( \theta \\).
+
+We need to make another assume that \\(\varepsilon^{(i)}\\)s are `IID` (Independetly & Identically Distributed). That is to say, all \\(\varepsilon^{(i)}\\) are independent to each other.
+
+In order to get the best approximate, we need to maximize the `Liklihood` of a set of \\(\theta\\), which is the same with maximizing \\(P(y^{(i)} \mid x^{(i)} \theta)\\).
+
+
+$$
+L(\theta) = P(y \mid x;\theta) = \prod_{i=1}^{m}P(y^{(i)} \mid x^{(i)};\theta)
+$$
+
+To simplify the calculation, we use the \\(ln\\) of \\(L(\theta)\\). This is a little bit different from `Andrew Ng`'s method, but the main idea is the same.
+
+$$
+\begin{array}
+l(\theta) = ln(L(\theta)) \\
+= ln(\prod_{i=1}^{m}\frac{1}{\sqrt{2\pi}\sigma}exp(...)) \\
+= mln(\frac{1}{\sqrt{2\pi}\sigma} - \sum_{i=1}^{m}\frac{(...)^2}{2\sigma^2})
+\end{array}
+$$
+
+Therefore, to maximize \\( l(\theta) \\) is the same with minimizing:
+
+$$
+\sum_{i=1}^{m}\frac{(y^{(i)} - \theta^Tx^{(i)})^2}{2\sigma^2}
+$$
+
+The beautiful thing is that: \\( \sum_{i=1}^{m}\frac{(y^{(i)} - \theta^Tx^{(i)})^2}{2} \\) is just our \\(J(\theta)\\). 
+
+That's why we need to set J(\theta) in the form of `Least Square`.
+
+> Note: \\(\sigma^2\\) won't affect the result. The reason for this assert will leave till later posts.
+
+### Logestic Regression
+
+-------------
+This gonna be our first `Classification Algorithm`.
+
+In classification:
+
+$$
+y\in \left \{ 0,1 \right \}
+$$
+
+Thus, we should modify our hypothesis into some form like below:
+
+$$
+h(\theta) = g(\theta^Tx) \\
+g(z) = \frac{1}{1+e^{-z}}
+$$
+
+\\(g\\) is called `Sigmond Function` or `Logistic Function`.
+
+$$
+P(y=1 \mid x;\theta) = h_\theta (x) \\
+P(y=0 \mid x;\theta) = 1-h_\theta(x) \\[3ex]
+\therefore
+P(y \mid x;\theta) = h_\theta (x)^y (1-h_\theta(x))^{1-y}
+$$
+
+The last can equation be checked by set \\(y = 1\\) and \\(y = 0\\).
+
+Then we can get the liklihood of \\(\theta\\) as following:
+
+$$
+\begin{array}
+& L(\theta) = P(y \mid x;\theta) \\
+= \prod_{i}^{m} P(y^{(i)} \mid x^{(i)};\theta) \\
+= \prod_{i}^{m} h_\theta(x^{(i)})^{y^{(i)}}(1-h_\theta(x^{(i)}))^{1-y^{(i)}} \\[3ex]
+l(\theta) = \sum_{i=1}^{m}(y^{(i)}log h_\theta(x^{(i)}) + (1-y^{(i)})log(1-h_\theta(x^{(i)})))
+\end{array}
+$$
+
+Our job is to ***Maximize*** \\(l(\theta)\\) by changing the value of \\(\theta\\) using \\(\theta := \theta + \alpha\bigtriangledown_\theta l(\theta)\\). This method is called `Gradient Ascend`.It's a little bit different with `Gradient Descend` as we need to maximize something this time.
+
+The gradient of \\(l(\theta)\\) can be calculated as below:
+
+$$
+\bigtriangledown_\theta l(\theta)
+= \frac{\partial}{\partial \theta_i}l(\theta)
+= \sum_{i=1}^{m}(y^{(i)} - h_\theta (x^{(i)}))x_j^{(i)}
+$$
+
+
+###Digression Perception
+
+---------------
+This is another \\(g(z)\\) used to classify:
+$$
+g(z) = \left\{\begin{matrix}
+1 & if z \geqslant 0\\ 
+0 & else
+\end{matrix}\right.
+$$
