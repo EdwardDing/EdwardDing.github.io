@@ -131,7 +131,7 @@ $$
 $$
 
 
-###Digression Perception
+###Perceptron Learning Algorithm
 
 ---------------
 This is another \\(g(z)\\) used to classify:
