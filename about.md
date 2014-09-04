@@ -27,8 +27,6 @@ I’ve been involved in testing the software for CPI data collecting. Also, I’
 
 I was in charge of developing classifier for mobile terminal (iOS). This project relate to Deep Learning and Pattern Recognition. It is a little bit like the project I took in Dr. Xiabi Liu’s lab. But this time, we are using Convolutional Neural Network Algorithm (CNN). The project is based on Caffe framework developed by UCB.
 
-If you are interested in me or my project, you can download my resume [here].
-
 ###Professional Skills
 
 ------------------
@@ -47,3 +45,6 @@ If you are interested in me or my project, you can download my resume [here].
 <h4>Ohters</h4>
 * Familiar with Jekyll
 * Familiar with Caffe framework
+
+
+***For more informations about me, you can download my resume [here](/assets/resume.pdf).***
