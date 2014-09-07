@@ -10,3 +10,7 @@ Been with my girlfriend for one whole year. Flowers are ready, cakes are ready, 
 Tomorrow will be the Lunar's Festival in China, as well as our anniversary day~ Hope that I can stay with her.
 
 Love you my babe~
+
+---------
+
+Gee, the cake from `Black Swan` is really good.
