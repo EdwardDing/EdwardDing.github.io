@@ -11,14 +11,14 @@ Tomorrow will be the Lunar's Festival in China, as well as our anniversary day f
 
 Now, I am sitting in Starbucks, having a Cappuccino and waiting for my girl.
 
-<a href = "/assets/anniversary/stb.jpg">
-<img src = "/assets/anniversary/stb.jpg" alt = "at Starbucks" width = "100%" height = "100%">
+<a href = "/assets/anniversary/stb.JPG">
+<img src = "/assets/anniversary/stb.JPG" alt = "at Starbucks" width = "100%" height = "100%">
 </a>
 
 ---------
 
 Gee, the cake from `Black Swan Luxury` is really good. And the the service is pretty nice. Guess what, I've seen a wedding cake as expensive as ￥999,999.00!!
 
-<a href = "/assets/anniversary/cake.jpg">
-<img src = "/assets/anniversary/cake.jpg" alt = "at Starbucks" width = "100%" height = "100%">
+<a href = "/assets/anniversary/cake.JPG">
+<img src = "/assets/anniversary/cake.JPG" alt = "at Starbucks" width = "100%" height = "100%">
 </a>
