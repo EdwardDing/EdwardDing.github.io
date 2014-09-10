@@ -22,3 +22,17 @@ Gee, the cake from `Black Swan Luxury` is really good. And the the service is pr
 <a href = "/assets/anniversary/cake.JPG">
 <img src = "/assets/anniversary/cake.JPG" alt = "at Starbucks" width = "100%" height = "100%">
 </a>
+
+
+----------
+
+The past year wouldn't be so meaningful without your company. It is you that makes me feel so powerful as well as weak at the same time. I feel strong because I've defeated the whole world to get your heart. I feel weak as I'm still a kid who can not give you anything. I've never been so eager to grow up into a man who can protect you.
+
+Don't be afraid if you are not perfect, no one is perfect and that's why I'm here to be with you and love you.
+
+> I love three things in this world. <br>
+> The Sun, the Moon, and you<br>
+> Sun for the day, Moon for the night<br>
+> and you forever.
+
+***Happy anniversary and I love you :)***
