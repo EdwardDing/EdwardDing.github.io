@@ -33,7 +33,7 @@ I was in charge of developing classifier for mobile terminal (iOS). This project
 
 <h4>Programming Languages</h4>
 * Good at: C / C++, Objective-C, Python, LaTex, markdown(kramdown & Github markdown)
-* Used before: Ruby, VBA, Verilog HDL, Matlab
+* Used before: Ruby, VBA, Verilog HDL, Matlab, HTML, CSS
 
 <h4>Experience in iOS / Cocoa developing</h4>
 
@@ -47,4 +47,4 @@ I was in charge of developing classifier for mobile terminal (iOS). This project
 * Familiar with Caffe framework
 
 
-***For more informations about me, you can download my resume [here](/assets/resume.pdf).***
+***For more informations about me, you can download my resume [here](/assets/resume.pdf).*** 
