@@ -237,4 +237,4 @@ No more work for us, all we need to do now is to run `train`. After minutes of c
 
 Well done!
 
-You can find my source code [here]() under SparseAutoencoder folder.
+You can find my source code [here](https://github.com/EdwardDing/UFLDL-Exercise) under SparseAutoencoder folder.
