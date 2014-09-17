@@ -1,0 +1,276 @@
+---
+layout: post
+title: "Machine Learning 3"
+categories: note
+excerpt: Newton's Method, Generalized Linear Models and Softmax Regression.
+---
+
+{% include custom/mathjax.html %}
+
+###Newton's Method
+
+-------------------
+Newton's method in most cases converges much more quickly than `Gradient Descend / Ascend`. Newton's method updates parameters as below:
+
+$$
+\theta:=\theta - \frac{f(\theta)}{f'(\theta)}
+$$
+
+<a href = "/assets/machineLearning/newton.png">
+	<img src = "/assets/machineLearning/newton.png" alt = "newton">
+</a>
+
+So, by letting \\( f(\theta)=l'(\theta) \\), we can maximize \\( l \\) through update rules above. That becomes:
+
+$$
+\theta := \theta - \frac{l'(\theta)}{l''(\theta)}
+$$
+
+The vectorization form of this formula is:
+
+$$
+\theta := \theta - H^{-1}\bigtriangledown_{\theta} l(\theta)
+$$
+
+//( H //) is called the `Hessian`, whose entries are given by:
+
+$$
+H_{ij} = \frac{\partial^2l(\theta)}{\partial \theta_i \partial \theta_j}
+$$
+
+When Newton's method is applied to maximize the logistic regression log likelihood function \\( l(\theta) \\), the resulting method is also called `Fisher Scoring`.
+
+###Generalized Linear Models
+
+-----------------
+Before GLM, we have to hold some basic ideas about one set of distributions called `Exponential Family Distributions`.
+
+$$
+p(y;\eta) = b(y) exp(\eta^T T(y) - a(\eta))
+$$
+
+Here, \\( \eta \\) is called the `natural parameter`. \\( T(y) \\) is the `sufficient statistic` (in most cases \\( T(y) = y \\) ) and \\( a(\eta) \\) is the `log partition function`. 
+
+Bernoulli and Gaussian distributions are two examples of exponential family.
+
+For Bernoulli Distributions:
+
+$$
+\begin{align}
+p(y;\phi) 
+&=  \phi^y(1-\phi)^{1-y} \\
+&= exp((log(\frac{\phi}{1-\phi}))y + log(1-\phi))
+\end{align}
+$$
+
+We can use \\( \eta \\) to represent \\( \phi \\) which end up with \\( \phi = 1/(1+e^{-\eta}) \\). See that? This is our ***Sigmoid Function***!!
+
+$$
+\begin{align}
+T(y) 
+&= y \\
+a(\eta)
+&= -log(1-\phi) = log(1+e^\eta) \\
+b(y)
+&= 1
+\end{align}
+$$
+
+We can do the same thing with Gaussian Distribution:
+
+$$
+p(y;\mu) = \frac{1}{\sqrt{2\pi}}exp(-\frac{1}{2}(y-\mu)^2)
+$$
+
+Here we have:
+
+$$
+\begin{align}
+\eta 
+&= \mu \\
+T(y)
+&= y \\
+a(\eta)
+&= \mu^2/2 = \eta^2/2 \\
+b(y)
+&= (1 / \sqrt{2\pi})exp(-y^2/2)
+\end{align}
+$$
+
+###Constructing GLMs
+
+---------------
+Now, with exponential family distribution, when we need to solve a classification or regression problem, the only decision we need to make is to ***choose a proper distribution***, others things will be done automatically.
+
+To use GLMs, we need to make the following assumptions:
+
+1. \\( y \mid x;\theta \sim \\) ExponentialFamily(\\( \eta \\)).
+2. Given \\( x \\), our goal is to predict the expected value of \\( T(y) \\). In moset cases, \\( T(y) = y \\), so this means we would like our hypothesis satisfy \\( h(x) = E\[y \mid x\] \\).
+3. \\( \eta = \theta^T x \\)
+
+In the next 2 exmaples we can see how GLM automatically generate the model (hypothesis) for us.
+
+***Ordinary Least Squares***
+
+As the target variable \\( y \\) is continuous, we choose Gaussian. Thus, we have:
+
+$$
+\begin{align}
+h_\theta(x)
+&= E[y \mid x;\theta ] \\
+&= \mu \\
+&= \eta \\
+&= \theta^T x
+\end{align}
+$$
+
+***Logistic Regression***
+
+Here we are interested in binary classification, so it is resonable for us to choose Bernoulli.
+
+$$
+\begin{align}
+h(\theta)
+&= E[y \mid x;\theta ] \\
+&= \phi \\
+&= \frac{1}{1+e^{-\eta}} \\
+&= \frac{1}{1+e^{-\theta^T x}}
+\end{align}
+$$
+
+###Softmax Regression
+
+---------------------
+Softmax Regression is used to solve classification problems in which \\( y \in \{ 1,2,...,k \} \\). In this situation, we are going to use `Multinomial Distribution` to generate the model.
+
+First, we need to express the multinomial in the form of exponential family.
+
+We use \\( k \\) parameters \\( \phi_1, \phi_2,...,\phi_k\\) to represnet the possibily that i is the answer. But, they are not independent to each other as:
+$$
+\sum_{i=1}^{k} \phi_i = 1
+$$
+So, instead we just use \\( k-1 \\) parameters where \\( \phi_i = p(y=i;\phi) \\), and 
+$$
+\phi_k = p(y=k;\phi) = 1 - \sum_{i=1}^{k} \phi_{i}
+$$
+
+> Note: \\( \phi_k \\) is ***not*** a variable, we are using \\( \phi_k \\) just for notational convenience.
+
+To express multinomial as an exponential family distribution, we define \\( T(y) \in \mathbb{R}^{k-1} \\) as follows:
+
+$$
+T(1) = \begin{bmatrix}
+1\\ 
+0\\ 
+0\\ 
+\vdots \\ 
+0
+\end{bmatrix}
+
+,T(2) = \begin{bmatrix}
+0\\ 
+1\\ 
+0\\ 
+\vdots \\ 
+0
+\end{bmatrix}
+, \cdots ,
+T(k-1) = \begin{bmatrix}
+0\\ 
+0\\ 
+0\\ 
+\vdots \\ 
+1
+\end{bmatrix}
+,T(k) = \begin{bmatrix}
+0\\ 
+0\\ 
+0\\ 
+\vdots \\ 
+0
+\end{bmatrix}
+$$
+
+We will introduce one more usful notation, `Indicator Function`. 
+
+$$
+1\{True\} = 1, 1\{False\} = 0
+$$
+
+So we can write the relation between \\( T(y) \\) and \\( y \\) as \\( (T(y))_i = 1 \{ y=i \} \\). Further, we have \\(E[(T(y))_i] = P(y=i) = \phi_i\\)
+
+Now, we have:
+
+$$
+\begin{align}
+p(y;\phi)
+&= \phi_1^{1\{y=1\}}\phi_2^{1\{y=2\}} \cdots \phi_k^{1\{y=k\}} \\
+&= \phi_1^{1\{y=1\}}\phi_2^{1\{y=2\}} \cdots \phi_k^{1-\sum_{i=1}^{k-1}1\{y=i\}} \\
+&= \phi_1^{(T(y))_1}\phi_2^{(T(y))_2} \cdots \phi_k^{1-\sum_{i=1}{k-1}(T(y))_i} \\
+&= exp[(T(y))_1log(\phi1) + T(y))_2log(\phi2) + \cdots + (1-\sum(T(y))_i)log(\phi_k)] \\
+&= exp[(T(y))_1log(\frac{\phi_1}{\phi_k}) + T(y))_2log(\frac{\phi_2}{\phi_k}) + \cdots +log(\phi_k)] \\
+&= b(y)exp(\eta^T T(y) - a(\eta)) 
+\end{align}
+$$
+
+where
+
+$$
+\begin{align}
+\eta
+&= \begin{bmatrix}
+log(\phi_1/\phi_k)\\ 
+log(\phi_2/\phi_k)\\ 
+\vdots\\ 
+log(\phi_{k-1}/\phi_k)
+\end{bmatrix} \\
+a(\eta)
+&= -log(\phi_k) \\
+b(y)
+&= 1
+\end{align}
+$$
+
+The `link function` is given by \\( \eta_i = log(\frac{\phi_i}{\phi_k}) \\). For convenience, we define \\( \eta_k = log(\frac{\phi_k}{\phi_k}) = 0 \\).
+
+We can get the `response function` by inverting the link function:
+
+$$
+\phi_i = \frac{e^{\eta_i}}{\sum_{j=1}^{k}e^{\eta_j}}
+$$
+
+This response function is also called ***Softmax Function***.
+
+According to assumption 3, we have \\( \eta_i = \theta_i^T x \\) where \\( \theta_1, \cdots, \theta_{k-1} \in \mathbb{R}^{n + 1} \\). So, we can get the following formula:
+
+$$
+\begin{align}
+p(y=i \mid x;\theta)
+&= \phi_i \\
+&= \frac{e^\eta_i}{\sum_{j=1}^{k}e^{\eta_j}} \\
+&= \frac{e^{\theta_i^T x}}{\sum_{j=1}^{k}e^{\theta_j^T x}} \\
+\end{align}
+$$
+
+Thus, in `softmax regression`, our hypothesis shou output:
+
+$$
+\begin{align}
+h_\theta(x)
+&= E[T(y) \mid x;\theta] \\
+&= \begin{bmatrix}
+\phi_1\\ 
+\phi_2\\ 
+\vdots\\ 
+\phi_k-1
+\end{bmatrix} \\
+&= \frac{1}{\sum_{j=1}^{k}e^{\theta_j^T x}}\begin{bmatrix}
+e^{\theta_1^T x}\\ 
+e^{\theta_2^T x}\\ 
+\vdots\\ 
+e^{\theta_{k-1}^T x}
+\end{bmatrix}
+\end{align}
+$$
+
+We can fit the parameters by maximizing \\( l(\theta) \\) using Gradient Ascend or Newton's method.

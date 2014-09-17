@@ -2,6 +2,7 @@
 layout: post
 title: "Anniversary"
 date: 2014-09-07 10:16
+categories: freewrite
 excerpt: Anniversary with my lovely bunny
 ---
 

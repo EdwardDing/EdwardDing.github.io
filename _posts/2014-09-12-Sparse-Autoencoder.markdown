@@ -2,6 +2,7 @@
 layout: post
 title: "Sparse Autoencoder"
 date: 2014-09-07 10:16
+categories: UFLDL
 excerpt: Programming Assignment 1 of UFLDL - Sparse Autoencoder implementation.
 ---
 
