@@ -2,7 +2,7 @@
 layout: post
 title:	"Prove of Normal Equation"
 date: 2014-08-31 10:16:00
-categories: note
+categories: machine-learning
 excerpt: "A prove of how Normal Equation works"
 ---
 

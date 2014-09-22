@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Machine Learning 3"
-categories: note
+categories: machine-learning
 excerpt: Newton's Method, Generalized Linear Models and Softmax Regression.
 ---
 

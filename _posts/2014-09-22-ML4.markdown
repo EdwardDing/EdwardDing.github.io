@@ -1,0 +1,166 @@
+---
+layout: post
+title: "Machine Learning 4"
+categories: machine-learning
+excerpt: Generative Learning Algorithms, GDA, Naive Bayes and Laplave smoothing.
+---
+
+{% include custom/mathjax.html %}
+
+###Generative Learning Algorithm
+
+-----------------------
+All classification algorithms we've been learned so far are called `Discrimitive Learning Algorithms`, in which we learn \\( p(y \mid x) \\) or \\( h_\theta(x) \\) directly. Now, we gonna learn a new kind of method called `Generative Learning Algorithms`, in which we learn \\( p(x \mid y) \\) and \\( p(y) \\) first, and then compute \\( p(y \mid x) \\) by using Bayes formula.
+
+$$
+p(y=1 \mid x) = \frac{p(x \mid y=1)p(y=1)}{p(x)}
+$$
+
+We can think of those two kinds of algorithms in ways that discrimitive methods is to build models for input features that output an answer directly when given an input.While generative method is to build one model for each different categories and find which one is the most closest to the new input. It gives the answer by comparing different models.
+
+###Gaussian Discriminant Analysis
+
+--------------------
+Gaussian discriminant analysis (GDA) is a generative model for continous input. We'll assume that \\( p(x \mid y) \\) is distributed accoding to a multivariate normal distribution.
+
+In multivariate normal distribution, the PMF is:
+
+$$
+p(z) = \frac{1}{(2\pi)^\frac{1}{n}|\Sigma|^\frac{1}{2}}exp[-\frac{1}{2}(x-\mu)^T \Sigma ^{-1}(x-\mu)]
+
+$$
+
+where 
+$$
+\Sigma=E[(x-\mu)(x-\mu)^T]
+$$
+is the `covariance matrix`.
+
+Now we have all we need:
+
+$$
+\begin{align}
+p(y) &= \phi^y(1-\phi)^{1-y} \\
+p(x \mid y=0) &= \frac{1}{(2\pi)^\frac{1}{n}|\Sigma|^\frac{1}{2}}exp[-\frac{1}{2}(x-\mu_0)^T \Sigma ^{-1}(x-\mu_0)] \\
+p(x \mid y=0) &= \frac{1}{(2\pi)^\frac{1}{n}|\Sigma|^\frac{1}{2}}exp[-\frac{1}{2}(x-\mu_1)^T \Sigma ^{-1}(x-\mu_1)]
+\end{align}
+$$
+
+Parameters here are \\( \Sigma, \mu_0, \mu_1 \\) and \\( \phi \\).
+
+As usually we can write down the log likelihood of those parameters.
+
+$$
+\begin{align}
+l(\phi,\mu_0,\mu_1,\Sigma) 
+&= log \prod_{i=1}^{m}p(x^{(i)}, y^{(i)}) \\
+&= log \prod_{i=1}^{m}p(x^{(i)} \mid y^{(i)})p(y^{(i)})
+\end{align}
+$$
+
+By maximizing the log likelihood, we can get the value of those paramters using input data.
+
+$$
+\begin{align}
+\phi &= \frac{\sum y^{(i)}}{m} = \frac{\sum_{i=1}^{m} 1\{ y^{(i) = 1} \}}{m} \\
+\mu_0 &= \frac{\sum_{i=1}^{m} 1\{ y^{(i) = 0} \} x^{(i)} }{\sum_{i=1}^{m} 1\{ y^{(i=0)} \}} \\
+
+\mu_1 &= \frac{\sum_{i=1}^{m} 1\{ y^{(i) = 1} \} x^{(i)} }{\sum_{i=1}^{m} 1\{ y^{(i=1)} \}} \\
+
+\Sigma &= \frac{1}{m}\sum_{i=1}^{m}(x^{(i)} - \mu_y(i))(x^{(i)} - \mu_y(i))^T
+\end{align}
+$$
+
+> Note: The formula should make sense. e.g. the numerator of \\( \mu_0 \\) represent the sum of \\( x^{(i)} \\) corresponding to examples where \\( y=0 \\). And the denominator represent the number of examples that output 0.
+
+Also, we can calculate \\( p(x) \\) easily by \\( p(x) = p(x \mid y = 1)p(y=1) + p(x \mid y=0)p(y=0) \\).
+
+With those parameters, we can easily get the distribution of different labels, just like the image shows.
+
+<div style="text-align: center">
+	<a href="/assets/GDA/GDA.png">
+		<img src="/assets/GDA/GDA.png" alt="GDA">
+		</img>
+	</a>
+</div>
+
+We can find that the function \\( p(y=1 \mid x) \\) is just like sigmod funtion.
+
+> Note: GDA makes stronger modeling assumptions \\( X \sim  \\) and is more data efficient. Logestic regression makes weaker assumptions, but is significantly more robust to deviations from modeling assumptions.
+
+###Naive Bayes Algorithms
+
+--------------------
+Naive Bayes Algoritms is another generative algorithm that handle discrete problmes, here we have
+$$
+y \in \{ 0,1 \}
+$$
+
+Let's say, we want to build a filter of spam email. We are using \\( X \\) to represent whether a word in the vocabulary list exists in an email.
+
+$$
+X = 1\\ 
+0\\ 
+1\\ 
+\vdots \\ 
+1\\ 
+\vdots\\ 
+0
+$$
+
+Of course we can use the GLM to solve this, but the problem is we have too many parameters. If we were to model \\( x \\) explicitly with a multinomial distribution, we'd end up with a \\( (2^n - 1) \\) dimentional parameter vector, where n usually are very big.
+
+Thus, we have to make a strong assumption over \\(p(x \mid y)\\). We will assume that the \\( x_i\\)'s are conditionally independent given \\( y \\). This assumption is called the `Naive Bayes Assumption`, the resulting algorithm is called the `Naive Bayes Classifier`. Now we have:
+
+$$
+\begin{align}
+p(x_1,\cdots,x_n \mid y)
+&= p(x_1 \mid y)p(x_2 \mid y,x_1) \cdots p(x_n \mid x_1,x_2,\cdots,x_n-1) \\
+&= p(x_1 \mid y)p(x_2 \mid y) \cdots p(x_n \mid y) \\
+&= \prod_{i=1}^{n}p(x_i \mid y)
+\end{align}
+$$
+
+Althogh the assumption itself is false under most cases (e.g. when the word Ding appears, you would porbably find the word Edward in the eamil as well), the algorithm truns out works very well.
+
+The model is parameterized by \\( \phi_{i \mid y=1} = p(x_i=1 \mid y=1), \phi_{i \mid y=0} = p(x_i=1 \mid y=0) \\) and \\( \phi_y = p(y=1) \\). As usual, we can get the estimates of parameters by maximizing the joint log likelihood:
+
+$$
+\begin{align}
+\phi_{j \mid y=1} 
+&= \frac{\sum_{i=1}^{m} 1\{ x_j^{(i)}=1 \wedge  y^{(i)} = 1 \} }{\sum_{i=1}^{m} 1\{ y^{(i)} = 1 \} } \\
+\phi_{j \mid y=0} 
+&= \frac{\sum_{i=1}^{m} 1\{ x_j^{(i)}=1 \wedge  y^{(i)} = 0 \} }{\sum_{i=1}^{m} 1\{ y^{(i)} = 0 \} } \\
+\phi_y 
+&= \frac{\sum_{i=1}^{m} 1\{ y^{(i)} = 1 \}}{m}
+\end{align}
+$$
+
+###Laplace Smoothing
+
+-------------
+There is a deadly problem with the Naive Bayes Algorithm when a new email comes up with a word that is not in your vocabulary. As this is the first time the word appears, \\( p(x_{n+1} \mid y=1) = 0, p(x_{n+1} \mid y=0) = 0 \\). Thus we have \\( p(y=1 \mid x) = \frac{0}{0 + 0} \\) which is not defined.
+
+Apparently this is not reasonable, as it seems to say that if you haven't seen a word before, you will never ever see it in the future. This is obviously ridiculous.
+
+Here is the fix, called `Laplace Smoothing`. 
+
+$$
+\phi_j = \frac{\sum_{i=1}^{m} 1\{ z^{(i)} = j \} + 1}{m + k}
+$$
+
+> Note: \\( \sum_{j=1}{k} \phi_j = 1 \\) still holds.
+
+Using Laplace smoothing, the \\( \phi_j \\) will never be zero. And our modified `Naive Bayes Classifier` become:
+
+$$
+\begin{align}
+\phi_{j \mid y=1} 
+&= \frac{\sum_{i=1}^{m} 1\{ x_j^{(i)}=1 \wedge  y^{(i)} = 1 \} + 1}{\sum_{i=1}^{m} 1\{ y^{(i)} = 1 \} + 2} \\
+\phi_{j \mid y=0} 
+&= \frac{\sum_{i=1}^{m} 1\{ x_j^{(i)}=1 \wedge  y^{(i)} = 0 \} + 1}{\sum_{i=1}^{m} 1\{ y^{(i)} = 0 \} + 2} \\
+\phi_y 
+&= \frac{\sum_{i=1}^{m} 1\{ y^{(i)} = 1 \} + 1}{m + 2}
+\end{align}
+$$
+
