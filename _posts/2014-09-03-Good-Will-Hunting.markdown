@@ -2,7 +2,7 @@
 layout: post
 title: "Good Will Hunting"
 date: 2014-09-03 11:08
-categories: free write
+categories: freewrite
 excerpt: Some classic lyrics picked from the movie 'Good Will Hunting'.
 ---
 

@@ -10,24 +10,27 @@
         <script src="/js/uikit.min.js"></script>
     </head>
 
-    <body>
-        <nav class="uk-navbar">
-            <a class="uk-navbar-brand" href="">Edward Ding's Blog</a>
-            <ul class="uk-navbar-nav uk-navbar-center">
-                <li><a href="/categories/MachineLearning">Machine Learning</a></li>
-                <li><a href="/categories/FreeWrite">UFLDL</a></li>
-                <li><a href="/categories/FreeWrite">Free Write</a></li>
-                <li><a href="/categories/Tutorial">Tutorial</a></li>
-                <li><a href="/categories/AllPosts">All Posts</a></li>
-            </ul>
+    <body >
 
-            <!-- From the right side -->
-            <div class="uk-navbar-flip">
-                <ul class="uk-navbar-nav">
-                    <li><a href="about">About Me</a></li>
+        <div class="navbar-block">
+            <nav class="uk-navbar">
+                <a class="uk-navbar-brand" href="{{ site.baseurl }}/">Edward Ding's Blog</a>
+                <ul class="uk-navbar-nav uk-navbar-center">
+                    <li><a href="/categories/MachineLearning">Machine Learning</a></li>
+                    <li><a href="/categories/ufldl">UFLDL</a></li>
+                    <li><a href="/categories/FreeWrite">Free Write</a></li>
+                    <li><a href="/categories/Tutorial">Tutorial</a></li>
+                    <li><a href="/categories/AllPosts">All Posts</a></li>
                 </ul>
-            </div>
-        </nav>
+
+                <!-- From the right side -->
+                <div class="uk-navbar-flip">
+                    <ul class="uk-navbar-nav">
+                        <li><a href="about">About Me</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
 
         <a href="categories/MachineLearning">
             <div class="ml-index">
@@ -44,6 +47,20 @@
                 </div>
             </div>
         </a>
-        <a href="UFLDL">
+
+        <div class="bottom-index">
+            <a href="/categories/ufldl">
+                <div class="ufldl-index">
+                    <img class="ufldl-img" src="assets/index/UFLDL.png">
+                    <div class="ufldl-title-block">
+                        <h4 class="ufldl-title">Unsupervised feature learning <br> Deep learning </h4>
+                    </div>
+                    <div class="ufldl-big-title-block">
+                        <h4 class="ufldl-big-title">UFLDL</h4>
+                    </div>
+                </div>
+            </a>
+        </div>
+
     </body>
 </html>
