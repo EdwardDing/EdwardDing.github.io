@@ -1,3 +1,9 @@
+/* font declearation*/
+@font-face {
+    font-family: 'DJRType';
+    src:url('HelveticaNeueUltraLight.ttf') format('truetype');
+}  
+
 /* Self Defined CSS Style */
 /* ----------------------------------------------------------*/
 .frame{
@@ -37,7 +43,7 @@
 }
 
 .ml-title {
-	font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-family:DJRType,"Helvetica Neue",Helvetica,Arial,sans-serif;
 	font-weight:100;
 	font-size: 56px;
 	color: black;
