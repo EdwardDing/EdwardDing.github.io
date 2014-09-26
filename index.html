@@ -12,8 +12,8 @@
 
     <body onResize="reSizeDiv()">
         <div id="bigFrame" class="frame">
-            <div id = "navDiv" class="navbar-block">
-                <nav class="uk-navbar">
+            <!-- <div id = "navDiv" class="navbar-block"> -->
+                <nav id="nav" class="uk-navbar">
                     <a class="uk-navbar-brand" href="">Edward Ding's Blog</a>
                     <ul class="uk-navbar-nav uk-navbar-center">
                         <li><a href="/categories/MachineLearning">Machine Learning</a></li>
@@ -30,7 +30,7 @@
                         </ul>
                     </div>
                 </nav>
-            </div>
+            <!-- </div> -->
 
             <a href="/categories/MachineLearning">
                 <div class="ml-index">
@@ -77,13 +77,16 @@
                 var w = "1048px"; //DIV宽度（像素）
                 var w1 = "100%";  //DIV宽度（百分比）
                 var d = document.getElementById("bigFrame");
+                var n = document.getElementById("nav");
                 if(s > a)
                 {
                     d.style.width = w1;
+                    nav.style.width = w1;
                 }
                 else
                 {
                     d.style.width = w;
+                    nav.style.width = w;
                 }
             }
         </SCRIPT>

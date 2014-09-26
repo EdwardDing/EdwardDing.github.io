@@ -12,11 +12,11 @@
 	width: 100%;
 }
 
-.navbar-block{
+/*.navbar-block{
 	width: 100%;
 	height: 40px;
 	z-index: 1;
-}
+}*/
 
 
 /* Machine Learning Index */
@@ -54,7 +54,7 @@
 	font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
 	font-weight:100;
 	font-size: 40px;
-	color: #323232；
+	color: #616161;
 }
 
 .more-link{
@@ -1234,6 +1234,11 @@ html:not(.uk-touch) .uk-nav-offcanvas ul a:hover {
 .uk-navbar {
 	background:#616161;
 	color:#616161;
+	position: fixed;
+	width: 100%;
+	height: 40px;
+	z-index: 1;
+	opacity: 0.9;
 }
 .uk-navbar:before,.uk-navbar:after {
 	content:" ";
