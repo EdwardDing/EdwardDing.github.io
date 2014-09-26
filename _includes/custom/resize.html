@@ -1,0 +1,24 @@
+<SCRIPT>
+    reSizeDiv();
+    function reSizeDiv()
+    {
+        //var s = document.body.offsetWidth;  //(带浏览器边框的宽度)
+        var s = document.body.clientWidth; //(不带浏览器边框的宽度)
+
+        if(isFirefox=navigator.userAgent.indexOf("Firefox")>0)
+         s=window.innerWidth;
+
+        var a = 1048;  //要变换的临界点
+        var w = "1048px"; //DIV宽度（像素）
+        var w1 = "100%";  //DIV宽度（百分比）
+        var d = document.getElementById("bigFrame");
+        if(s > a)
+        {
+            d.style.width = w1;
+        }
+        else
+        {
+            d.style.width = w;
+        }
+    }
+</SCRIPT>

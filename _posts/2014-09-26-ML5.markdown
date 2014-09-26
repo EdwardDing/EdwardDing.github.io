@@ -1,0 +1,176 @@
+---
+layout: post
+title: "Machine Learning 5"
+categories: machine-learning
+excerpt: Variations for Naive Bayes, Multinomial Event Model, Support Vector Machine
+---
+
+{% include custom/mathjax.html %}
+
+
+###Variations for Naive Bayes Model
+
+---------------------
+We've talked about Naive Bayes Model in last note. It is the basic generative model for discrete input of 0 and 1. Here we'll introduce 2 more variations from Naive Bayes Model. 
+
+####Naive Bayes with Multinomial
+
+In this case, our input
+$$
+x \in \{ 1,2,\cdots,k \}
+$$
+. Thus, we cannot use Bernoulli to model \\( p(x_i \mid y) \\) any more, instead, we gonna use multinomial distribution. That's it, that simple. Acutally This model is much more common than Naive Bayes Model, as we can always `discretise` the continous input into some discrete valus.
+
+####Multinomial Event Model
+
+Let's talk about one more model specifically for text classification. Naive Bayes works well in many situations, however there is a better model for text classification, which is called `Multinomial Event Model.`
+
+Actually, in the field of text classification, Naive Bayes is also called ***Multi-variate Bernoulli Event Model***. I know, I know, such a freaking long name XD.
+
+> Facts:  Do you know that Picasso's name is 103's long! That's even more freaking right? His full name is : Pablo Diego José Fransisco de Paula Juan Nepomuceno María de los Remedios Cipriano de la Santísima Trinidad Martyr Patricio Clito Ruiz y Picasso
+
+<div style="text-align:center">
+	<a href="/assets/machineLearning/picasso.png">
+		<img src="/assets/machineLearning/picasso.png" alt="picasso" width="70%" height="70%">
+	</a>
+</div>
+
+
+In Multinomial event model, our input is different from Naive Bayes. 
+
+$$
+(x_1^{(i)}, x_2^{(i)}, \cdots, x_{n_i}^{(i)})
+$$
+
+where \\( n_i \\) represent the number of words in the i-th email in your training set. \\(x_j\\) represent the index of the j-th word in our vocabulary. For example, assume we have an email with content `Hello World`. And in our vocabulary, `Hello` is the 300th word, and World is the 1000th word. Then we have \\( x^{(i)} = (300,1000) \\) and \\( n_i = 2 \\).
+
+As usually, we need to model \\( p(x,y) \\) and get the maximum likelihood estimate for all parameters.
+
+$$
+p(x,y) = (\prod_{i=1}^{n} p(x_i \mid y))p(y)
+$$
+
+> Note: We assume that \\( p(y) \\)is the sam for all \\( x_j \\). That means: the probability of a word to come up in your email is not depend on its position.
+
+Parametes here are:
+
+$$
+\begin{align}
+\phi_{k \mid y = 1} &= p(x_i = k \mid y = 1) \\
+\phi_{k \mid y = 0} &= p(x_i = k \mid y = 0) \\
+\phi_y &= p(y = 1)
+\end{align}
+$$
+
+By maximizing the log likelihood, we can get the estimate of these parameters:
+
+$$
+\begin{align}
+\phi_{k \mid y = 1} &= \frac{\sum_{i=1}^{m} \sum_{j=1}^{n_i} 1 \{ x_j^{(i)} = k \wedge y^{(i)} = 1\} }{\sum_{i=1}^{m} 1 \{ y^{(i)} = 1 \} n_i } \\
+\phi_{k \mid y = 0} &= \frac{\sum_{i=1}^{m} \sum_{j=1}^{n_i} 1 \{ x_j^{(i)} = k \wedge y^{(i)} = 0\} }{\sum_{i=1}^{m} 1 \{ y^{(i)} = 0 \} n_i } \\
+\phi_y &= \frac{\sum_{i=1}^{m} 1\{ y^{(i)} \} = 1}{m}
+\end{align}
+$$
+
+> Note: The numerator in the first formula represent the number of appearance of the k-th word in the vocabulary in all spam mails. The denominator represent the totoal length of all spam mails.
+
+###SVM: Support Vector Machine
+
+---------------------
+
+SVM is one of the best "off-the-shelf" supervised learning algorithm. Before we start digging into SVM, we need to talk about some new concept for it.
+
+***Notation Change***
+
+As it is really hard to use the old notation system in SVM, we gonna change our notation system a little bit. We'll use
+$$
+y \in \{ -1, +1 \}
+$$
+instead of 
+$$
+\{ 0,1 \}
+$$
+to denote the label class. Also, we'll drop the parameter \\( \theta \\) and the assumption that \\( x_0 = 1 \\). We will use parameters \\( w, b \\) to represent the classifier:
+
+$$
+h_{w,b} = g(w^Tx + b)
+$$
+
+###Margins
+
+-------------------------
+
+For a good model, it should be easy to discriminate different classes. Thus, we need a way to illustrate how 'far' it is from a point in the training set or input data to our `separating hyperplane` (AKA decision boundary). For example, in logistic model, we can predict the output to be 1 without question if \\( \theta^T x >> 0 \\), and the output to be 0 if \\( \theta^T x << 0 \\). 
+
+Thus, if there is model that for all i has:
+
+$$
+if y = 1 => \theta^T x >> 0 \\
+if y = 0 => \theta^T x << 0
+$$
+
+it must be a very good model, as it can separate two classes very easily.
+
+To illustrate this more formally and quantitatively, we'll use two kinds of margins. One is `Functional Margin`, the other is `Geometric Margin`.
+
+####***Functional Margin***
+
+We define functional margin as:
+
+$$
+{\hat{ \gamma }}^{(i)} = y^{(i)}(w^T x + b)
+$$
+
+When \\( y^{(i)} = 1 \\), then for the funtional margin to be large, we need \\( w^T x + b \\) to be a large positive number. When \\( y^{(i)} = -1 \\), we need it to be a large negative number. Hence, a large functional margin represents a confident and a corrent predection.
+
+We define the margin of a whoe training set to be the smallest of all.
+
+$$
+{\hat{ \gamma }} = \underset{i=1,\cdots,m}{min}{\hat{ \gamma }}^{(i)}
+$$
+
+However, there is a problem of functional margin. When we replace \\( (w,b) \\) with \\( (2w,2b) \\), the new margin will be twice as much as the previous one. I.e. We can make the functional margin as large as we can without really changing anything meaningful.
+
+To solve the problem, we may use geometric margins instead.
+
+####***Geometric Margins***
+
+As the picture show, the geometric margins from A to the hyperplane corresponds to the legngth of AB where AB is orthogonal to the hyperplane.
+
+<div style="text-align:center">
+	<a href="/assets/machineLearning/margin.png">
+		<img src="/assets/machineLearning/margin.png" alt="margin" width="70%" height="70%">
+	</a>
+</div>
+
+The vector \\( w \\) in the image is also orthogonal to the hyperplane. To get the value of \\( \gamma^{(i)} \\), we'll first get the coordinate of B. It's quite easy. The position of B is given by
+$$
+x^{(i)} - \gamma^{(i)} \frac{w}{\left \| w \right \|}
+$$
+.
+
+Here is one more condition: B is located on the separating hyperplane, thus:
+
+$$
+w^T(x^{(i)} - \gamma^{(i)} \frac{w}{\left \| w \right \|}) + b = 0
+$$
+
+Solving for \\( \gamma^{(i)} \\) yields:
+
+$$
+\gamma^{(i)} = (\frac{w}{\left \| w \right \|})^T x^{(i)} + \frac{b}{\left \| w \right \|}
+$$
+
+More generally, we define the geometric margin of \\( (w,b) \\) WRT a training example as:
+
+$$
+\gamma^{(i)} = y^{(i)} \big(  (\frac{w}{\left \| w \right \|})^T x^{(i)} + \frac{b}{\left \| w \right \|} \big)
+$$
+
+Same with the functional margin, we define the geometric margin for the whole training set as:
+
+$$
+\gamma = \underset{i=1,\cdots,m}{min} \gamma^{(i)}
+$$
+
+> Note: Remeber that funtional margin has a hat \\( \hat{\gamma} \\) while geometric margin doest not \\(\gamma \\)

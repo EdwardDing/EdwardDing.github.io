@@ -10,57 +10,82 @@
         <script src="/js/uikit.min.js"></script>
     </head>
 
-    <body >
-
-        <div class="navbar-block">
-            <nav class="uk-navbar">
-                <a class="uk-navbar-brand" href="{{ site.baseurl }}/">Edward Ding's Blog</a>
-                <ul class="uk-navbar-nav uk-navbar-center">
-                    <li><a href="/categories/MachineLearning">Machine Learning</a></li>
-                    <li><a href="/categories/UFLDL">UFLDL</a></li>
-                    <li><a href="/categories/FreeWrite">Free Write</a></li>
-                    <li><a href="/categories/Tutorial">Tutorial</a></li>
-                    <li><a href="/categories/AllPosts">All Posts</a></li>
-                </ul>
-
-                <!-- From the right side -->
-                <div class="uk-navbar-flip">
-                    <ul class="uk-navbar-nav">
-                        <li><a href="/about">About Me</a></li>
+    <body onResize="reSizeDiv()">
+        <div id="bigFrame" class="frame">
+            <div id = "navDiv" class="navbar-block">
+                <nav class="uk-navbar">
+                    <a class="uk-navbar-brand" href="">Edward Ding's Blog</a>
+                    <ul class="uk-navbar-nav uk-navbar-center">
+                        <li><a href="/categories/MachineLearning">Machine Learning</a></li>
+                        <li><a href="/categories/UFLDL">UFLDL</a></li>
+                        <li><a href="/categories/FreeWrite">Free Write</a></li>
+                        <li><a href="/categories/Tutorial">Tutorial</a></li>
+                        <li><a href="/categories/AllPosts">All Posts</a></li>
                     </ul>
-                </div>
-            </nav>
-        </div>
 
-        <a href="/categories/MachineLearning">
-            <div class="ml-index">
-                <img class="ml-img" src = "assets/index/machineLearning.png">
-                <div class="ml-title-block">
-                    <h1 class="ml-title">Machine Learning</h1>
-                    <h1 class="ml-subtitle">Notes from CS229</h1>
-                </div>
-                <div class="more-link">
-                    <a class="cs-link" href="http://cs229.stanford.edu">Learn more about CS229 ></a>
-                    <br>
-                    <a class="oc-link" href="http://openclassroom.stanford.edu/MainFolder/CoursePage.php?course=MachineLearning">Open classroom></a> &nbsp; &nbsp;
-                    <a class="ins-link" href="http://en.wikipedia.org/wiki/Andrew_Ng">Andrew Ng ></a>
-                </div>
-            </div>
-        </a>
-
-        <div class="bottom-index">
-            <a href="/categories/UFLDL">
-                <div class="ufldl-index">
-                    <img class="ufldl-img" src="assets/index/UFLDL.png">
-                    <div class="ufldl-title-block">
-                        <h4 class="ufldl-title">Unsupervised feature learning <br> Deep learning </h4>
+                    <!-- From the right side -->
+                    <div class="uk-navbar-flip">
+                        <ul class="uk-navbar-nav">
+                            <li><a href="/about">About Me</a></li>
+                        </ul>
                     </div>
-                    <div class="ufldl-big-title-block">
-                        <h4 class="ufldl-big-title">UFLDL</h4>
+                </nav>
+            </div>
+
+            <a href="/categories/MachineLearning">
+                <div class="ml-index">
+                    <img class="ml-img" src = "assets/index/machineLearning.png">
+                    <div class="ml-title-block">
+                        <h1 class="ml-title">Machine Learning</h1>
+                        <h1 class="ml-subtitle">Notes from CS229</h1>
+                    </div>
+                    <div class="more-link">
+                        <a class="cs-link" href="http://cs229.stanford.edu">Learn more about CS229 ></a>
+                        <br>
+                        <a class="oc-link" href="http://openclassroom.stanford.edu/MainFolder/CoursePage.php?course=MachineLearning">Open classroom></a> &nbsp; &nbsp;
+                        <a class="ins-link" href="http://en.wikipedia.org/wiki/Andrew_Ng">Andrew Ng ></a>
                     </div>
                 </div>
             </a>
+
+            <div class="bottom-index">
+                <a href="/categories/UFLDL">
+                    <div class="ufldl-index">
+                        <img class="ufldl-img" src="assets/index/UFLDL.png">
+                        <div class="ufldl-title-block">
+                            <h4 class="ufldl-title">Unsupervised feature learning <br> Deep learning </h4>
+                        </div>
+                        <div class="ufldl-big-title-block">
+                            <h4 class="ufldl-big-title">UFLDL</h4>
+                        </div>
+                    </div>
+                </a>
+            </div>
         </div>
 
+        <SCRIPT>
+            reSizeDiv();
+            function reSizeDiv()
+            {
+                //var s = document.body.offsetWidth;  //(带浏览器边框的宽度)
+                var s = document.body.clientWidth; //(不带浏览器边框的宽度)
+
+                if(isFirefox=navigator.userAgent.indexOf("Firefox")>0)
+                 s=window.innerWidth;
+
+                var a = 1048;  //要变换的临界点
+                var w = "1048px"; //DIV宽度（像素）
+                var w1 = "100%";  //DIV宽度（百分比）
+                var d = document.getElementById("bigFrame");
+                if(s > a)
+                {
+                    d.style.width = w1;
+                }
+                else
+                {
+                    d.style.width = w;
+                }
+            }
+        </SCRIPT>
     </body>
 </html>

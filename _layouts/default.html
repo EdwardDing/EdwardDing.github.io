@@ -3,19 +3,19 @@
 
   {% include head.html %}
 
-    <body>
+    <body onResize="reSizeDiv()">
+      <div id="bigFrame" class="frame">
+        {% include navigation.html %}
+        {% include custom/resize.html %}
 
-    <!-- {% include header.html %} -->
-    {% include navigation.html %}
-
-    <!-- Content -->
-    <div class="page-content">
-      <div class="wrap">
-      {{ content }}
+        <!-- Content -->
+        <div class="page-content">
+          <div class="wrap">
+          {{ content }}
+          </div>
+        </div>
+        
+        {% include footer.html %}
       </div>
-    </div>
-    
-    {% include footer.html %}
-
     </body>
 </html>
