@@ -2,7 +2,7 @@
 @font-face {
     font-family: 'DJRType';
     src:url('HelveticaNeueUltraLight.ttf') format('truetype');
-    src:url('HelveticaNeueUltraLight.svg#DJRType') format('truetype');
+    src:url('HelveticaNeueUltraLight.svg#DJRType') format('svg');
 }  
 
 /* Self Defined CSS Style */
