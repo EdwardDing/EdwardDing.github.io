@@ -1252,7 +1252,7 @@ html:not(.uk-touch) .uk-nav-offcanvas ul a:hover {
 	color:#eee;
 	font-size:16px;
 	font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
-	font-weight:thin
+	font-weight:400
 }
 .uk-navbar-nav>li>a[href='#'] {
 	cursor:text
@@ -1304,7 +1304,8 @@ html:not(.uk-touch) .uk-nav-offcanvas ul a:hover {
 .uk-navbar-brand {
 	font-size:18px;
 	color:#eee;
-	text-decoration:none
+	text-decoration:none;
+	font-weight:400;
 }
 .uk-navbar-brand:hover,.uk-navbar-brand:focus {
 	color:#c8c8c8;
