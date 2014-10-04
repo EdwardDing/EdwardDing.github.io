@@ -42,7 +42,7 @@ $$
 (x_1^{(i)}, x_2^{(i)}, \cdots, x_{n_i}^{(i)})
 $$
 
-where \\( n_i \\) represent the number of words in the i-th email in your training set. \\(x_j\\) represent the index of the j-th word in our vocabulary. For example, assume we have an email with content `Hello World`. And in our vocabulary, `Hello` is the 300th word, and World is the 1000th word. Then we have \\( x^{(i)} = (300,1000) \\) and \\( n_i = 2 \\).
+where \\( n_i \\) represent the number of words in the i-th email in your training set. \\(x_j\\) represent the index of the j-th word in our vocabulary. For example, assume we have an email with content `Hello World`. And in our vocabulary, `Hello` is the 300th word, and `World` is the 1000th word. Then we have \\( x^{(i)} = (300,1000) \\) and \\( n_i = 2 \\).
 
 As usually, we need to model \\( p(x,y) \\) and get the maximum likelihood estimate for all parameters.
 
@@ -50,9 +50,9 @@ $$
 p(x,y) = (\prod_{i=1}^{n} p(x_i \mid y))p(y)
 $$
 
-> Note: We assume that \\( p(y) \\)is the sam for all \\( x_j \\). That means: the probability of a word to come up in your email is not depend on its position.
+> Note: We assume that \\( p(y) \\)is the same for all \\( x_j \\). That means: the probability of a word to come up in your email is not depend on its position.
 
-Parametes here are:
+Parameters here are:
 
 $$
 \begin{align}
@@ -121,7 +121,7 @@ $$
 {\hat{ \gamma }}^{(i)} = y^{(i)}(w^T x + b)
 $$
 
-When \\( y^{(i)} = 1 \\), then for the funtional margin to be large, we need \\( w^T x + b \\) to be a large positive number. When \\( y^{(i)} = -1 \\), we need it to be a large negative number. Hence, a large functional margin represents a confident and a corrent predection.
+When \\( y^{(i)} = 1 \\), then for the funtional margin to be large, we need \\( w^T x + b \\) to be a large positive number. When \\( y^{(i)} = -1 \\), we need it to be a large negative number. Hence, a large functional margin represents a confident and a correct predection.
 
 We define the margin of a whoe training set to be the smallest of all.
 
