@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+
+  {% include head.html %}
+
+    <body onResize="reSizeDiv()">
+      <div id="bigFrame" class="frame">
+        {% include navigation.html %}
+        {% include custom/resize.html %}
+
+        {{content}}
+        
+      </div>
+    </body>
+</html>
