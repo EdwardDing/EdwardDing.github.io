@@ -18,7 +18,7 @@ It is quite easy to use this script, with only 3 steps.
 
 Open the `Lauchpad` and input `Terminal` in the search field and hit return to open it. Then, drag the script into the terminal window and hit return.
 
-You can download the executable script [here](/assets/renamer.py)
+You can download the executable script [here](/assets/renamer/renamer.py)
 
 
 ***Step 2: Prepare your input / output folder***
