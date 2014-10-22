@@ -1,14 +1,7 @@
-/* font declearation*/
-@font-face {
-    font-family: 'DJRType';
-    src:url('HelveticaNeueUltraLight.ttf') format('truetype');
-    src:url('HelveticaNeueUltraLight.svg#DJRType') format('svg');
-}  
-
 /* Self Defined CSS Style */
 /* ----------------------------------------------------------*/
 .frame{
-	height: 800px;
+	height: 100%;
 	width: 100%;
 }
 
@@ -17,16 +10,18 @@
 /* --------------------------------*/
 .ml-index {
 	position: absolute;
-	top: 100px;
+	top: 40px;
 	width: 1280px;
-	height: 503px;
+	height: 480px;
+	border-bottom: 5px solid #fff;
 }
 
 .ml-img {
-	position: relative;
+	position: absolute;
+	bottom: 0px;
 	left: 150px;
-	width: 896px;
-	height: 503px;
+	width: 768;
+	height: 460px;
 }
 
 .ml-title-block {
@@ -37,10 +32,10 @@
 }
 
 .ml-title {
-	font-family:DJRType,"Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
 	font-weight:100;
 	font-size: 56px;
-	color: black;
+	color: #313131;
 }
 
 .ml-subtitle {
@@ -75,10 +70,9 @@
 
 .bottom-index {
 	position: absolute;
-	top: 609px;
+	top: 520px;
 	width: 100%;
 	height: 200px;
-	border-top: 5px solid #fff;
 	border-bottom: 5px solid #fff;
 }
 
