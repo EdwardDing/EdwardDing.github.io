@@ -1,0 +1,304 @@
+---
+layout: post
+title: "Machine Learning 6"
+categories: machine-learning
+excerpt: Optimal Margin Classifier, Lagrange duality
+---
+
+{% include custom/mathjax.html %}
+
+Remember that last time we talked about two kinds of margins ---- `the functional margin` and `the geometric margin`. This time, we gonna use these margins to build a new classifier named Optimal Margin Classifier. But before that, we need to talk about 3 kinds of optimization problems and Lagrange duality.
+
+> Note: Through out this article, we assume that our training set is linearly separable.
+
+###3 Optimization Problems
+
+----------------------------
+
+The main task to create an Optimal Margin Classifier is to maximize the geometric margin or functional margin under some restrictions.
+
+***Optimization Problem #1***
+
+$$
+\begin{align}
+\underset{\gamma,w,b}{\max} \ 
+& \gamma \\
+s.t. \ 
+& y^{(i)}(w^Tx^{(i)} + b) \geq \gamma, \  i = 1, \cdots,m \\
+& \left \| w \right \| = 1
+\end{align}
+$$
+
+Here we want to maximize \\( \gamma \\), subject to each training example's functional margin greater than \\( \gamma \\). We have an extra constraint here:
+$$
+\left \| w \right \| = 1
+$$
+.This constraint ensures that the functional margin equals to the geometric margin. Thus, by solving this optimization problem, we can get the parameters that maximizes the geometric margin 
+
+However, this optimization problem is not as easy to solve as it may seems like, because
+$$
+\left \| w \right \| = 1
+$$
+is a non-convex constraint (possible w lies on a sphere).
+
+***Optimization Problem #2***
+
+$$
+\begin{align}
+\underset{\gamma,w,b}{\max} \ 
+& \frac{\hat{\gamma}}{\left \| w \right \|} \\
+s.t. \ 
+& y^{(i)}(w^Tx^{(i)} + b) \geq \hat{\gamma}, \  i = 1, \cdots,m 
+\end{align}
+$$
+
+Here, we are going to maximize the geometric margin subject to each training example's functional margin greater than  \\( \hat{\gamma} \\). This is actually the same optimization problem with #1.
+
+The good thing is that now we get rid of the nasty non-convex constraint. While, the bad thing is that now we have a non-convex objective.
+
+***Optimization Problem #3***
+
+In the last note, we mentioned that we can always set some arbitrary scaling constraint on \\(w,b\\) without making any real difference. So, we can introduce a `scaling constraint` here so that the functional margin of \\(w,b\\) with respect to the training set is always 1. (This is true, we can always adjust the scale of $$w$$ and $$b$$ to satisfy this.)
+
+$$
+\hat{\gamma} = 1
+$$
+
+With this constraint, we can transform the former optimization problem into a very neat form:
+
+$$
+\begin{align}
+\underset{\gamma,w,b}{\min} \ 
+& \frac{1}{2} {\left \| w \right \|}^2 \\
+s.t. \ 
+& y^{(i)}(w^Tx^{(i)} + b) \geq 1, \  i = 1, \cdots,m
+\end{align}
+$$
+
+This optimization problem only has a quadratic objective and linear constraints, which can be solved by some off-the-shelf programs. It's solution is all we need to build the `Optimal Margin Classifier`.
+
+### Lagrange Duality
+
+----------------------------
+
+Next, we will introduce a very useful idea called `Lagrange Duality`. This will play an important role when we later use kernels to get the optimal margin classifier to work efficiently in high dimensional space.
+
+Condider the follwing optimization problem, which is called the `Primal` problem:
+
+$$
+\begin{align}
+\underset{w}{\min} \quad
+& f(w) \\
+s.t. \quad
+& g_i(w) \leq 0, \ i = 1, \cdots, k \\
+& h_i(w) = 0, \ i = 1, \cdots, l
+\end{align}
+$$
+
+To solve the problem, we can define a `Generalized Lagrangian` as following:
+
+$$
+\mathcal{L}(w,\alpha,\beta) = f(w) + \sum_{i=1}^{k}\alpha_{i}g_{i}(w) + \sum_{i=1}^{l}\beta_{i}h_{i}(w)
+$$
+
+In this formula, the \\( \alpha_i \\)'s and \\( \beta_i \\)'s are the `Langrange Multipliers`. Our goal can be expressed in the following expression:
+
+$$
+\theta_{\mathcal{P}}(w) = \underset{\alpha,\beta:\alpha_i > 0}{\max} \ \mathcal{L}(w,\alpha,\beta)
+$$
+
+To get a sense how this works, we may consider that if \\( w \\) violates any of the constraints, for example, when there exists some \\( g_i(w) > 0 \\) , to maximize \\( \mathcal{L}(w,\alpha,\beta) \\), we can choose \\( \alpha_i \\) to be large enough, which acutally has no limit. Thus, our \\( \theta_{\mathcal{P}}(w) \\) can be \\( \infty \\). It is also true when we break the other constraints.
+
+It is obvious that when all constraints are satisfied, the \\( \mathcal{L}(w,\alpha,\beta) \\) is just equal to \\( f(w) \\). I.e. the \\( \theta_{\mathcal{P}}(w) \\) is actually the same with:
+
+$$
+\left\{\begin{matrix}
+f(w) & \mbox{if $w$ satisfies} \\ 
+\infty & \mbox{otherwise}
+\end{matrix}\right.
+$$
+
+We can see that \\( \theta_{\mathcal{P}} \\) just takes all the values of \\( w \\) that satisfies the primal constraints. Hence, the minimization proplem:
+
+$$
+\underset{w}{\min} \theta_{\mathcal{P}}(w) = \underset{w}{\min} \ \underset{\alpha,\beta: \alpha \geq 0}{\max} \mathcal{L}(w, \alpha, \beta)
+$$
+
+is the same problem with our original problem. See why it is called primal :)? For later use, we will define the value of the primal problem as 
+
+$$
+p^* = \underset{w}{\min} \theta_{\mathcal{P}}(w)
+$$
+
+Now, let's think about another problem that is extremely similar to the primal problem. We define:
+
+$$
+\theta_{ \mathcal{D} }(\alpha, \beta) = \underset{w}{\min} \mathcal{L}(w,\alpha,\beta)
+$$
+
+In
+$$
+\theta_{\mathcal{P}} (w)
+$$
+, we are doing maximization with respect to \\( \alpha, \beta \\). However, in the latter problem, we are doing the minimization work with respect to \\( w \\) and treat \\( \theta_{\mathcal{D}}(\alpha, \beta) \\) as a function of \\( \alpha \\) and \\( \beta \\).
+
+This is called the `dual` problem. It can be expressed as following:
+
+$$
+\underset{\alpha,\beta:\alpha_i \geq 0}{\max} \ \theta_{\mathcal{D}}(\alpha, \beta) = \underset{\alpha,\beta:\alpha_{i} \geq 0}{\max} \ \underset{w}{\min} \mathcal{L}(w, \alpha, \beta)
+$$
+
+We also define the value of the dual problem as 
+
+$$
+d^* = \underset{\alpha,\beta:\alpha_{i} \geq 0}{\max} \theta_{\mathcal{D}}(w)
+$$
+
+An universal characteristic for the primal and the dual is that:
+
+$$
+d^* = \underset{\alpha,\beta:\alpha_i \geq 0}{\max} \ \underset{w}{\min} \mathcal{L}(w, \alpha, \beta) \leq \underset{w}{\min} \ \underset{\alpha,\beta:\alpha_i \geq 0}{\max} \mathcal{L}(w, \alpha, \beta) = p^*
+$$ 
+
+You can remember this as the "max min" of a function is always being less than or equals to the "min max" of the function.
+
+Under some conditions, we have
+
+$$
+d^* = p^*
+$$
+
+In this case, we can solve the dual problem that are sometimes simpler instead of the primal one.
+
+Here are these condition:
+
+1. \\( f \\) and \\( g_{i} \\)'s are convex.
+
+2. \\( h_i \\)'s are affine, which means that there exists \\( a_i, b_i \\) so that \\( h_i(w) = a_i^Tw + b \\).
+
+3. \\( g_{i} \\)'s are feasible, which means that there exists some \\( w \\) so that \\( g_i(w) \leq 0\\) for all \\( i \\).
+
+Under such assumtions, there must exist
+$$w^*, \alpha^*, \beta^*
+$$
+so that \\( w^* \\) is the solution to the primal problem, 
+$$
+\alpha^*, \beta^*
+$$
+are the solution to the dual problem, and
+$$
+p^* = d^* = \mathcal{L}(w^*, \alpha^*, \beta^*)
+$$
+.
+
+Moreover, $$w^*, \alpha^*, \beta^*$$ satisfy the ***Karush-Kuhn-Tucker (KKT) conditions***:
+
+$$
+\begin{align}
+\frac{\partial}{\partial w_i} \mathcal{L}(w^*, \alpha^*, \beta^*) &= 0, \ i = 1, \cdots,n  \\
+\frac{\partial}{\partial \beta_i} \mathcal{L}(w^*, \alpha^*, \beta^*) &= 0, \ i = 1, \cdots,l \\
+\alpha_i^*g_i(w^*) &= 0, \ i = 1, \cdots, k \\
+g_i(w^*) & \leq 0, \ i = 1, \cdots, k \\
+\alpha^* & \geq 0, \ i = 1, \cdots, k
+\end{align}
+$$
+
+Let's pay some extra attention to the third equation:
+
+$$
+\alpha_i^* g_i(w^*) = 0, \ i = 1, \cdots, k
+$$
+
+It says that either $$\alpha_i^*$$ or $$g_i(w^*)$$ will be equals to $$0$$. This is called the ***KKT dual complementarity*** condition. When $$\alpha_i^* > 0$$, then $$g_i(w^*) = 0$$, we say that the "$$g_i(w) \leq 0$$" constraint is active, meaning that it holds with equality rather than with inequality.
+
+The KKT dual complementarity condition tells us that $$\alpha_i > 0 $$ happens only for those training examples whose functional margin is exactly equal to one.
+
+Actually what we are doing here it to find those points that are closest to the decision boundary. In most cases we can only find a few points.
+
+<div style="text-align:center">
+	<a href="/assets/machineLearning/SupportVectors.png">
+		<img src="/assets/machineLearning/SupportVectors.png" alt="SupportVectors" width="70%" height="70%">
+	</a>
+</div>
+
+Here in the image above, we can only find 3 training examples that activate the constraint. These three points are called the `Support Vectors`. 
+
+### Optimal Margin Classifier
+
+-------------------------------
+Finally, for the OM Classifier. Remember that in the first section, we talked about the optimization problem #3 as following:
+
+$$
+\begin{align}
+\underset{\gamma,w,b}{\min} \ 
+& \frac{1}{2} {\left \| w \right \|}^2 \\
+s.t. \ 
+& y^{(i)}(w^Tx^{(i)} + b) \geq 1, \  i = 1, \cdots,m
+\end{align}
+$$
+
+Using Lagrange duality to solve the problem, first we can get the Lagrangian for our optimization problem as following:
+
+$$
+\mathcal{L}(w, b, \alpha) = \frac{1}{2} {\left \| w \right \|}^2 - \sum_{i=1}^{m}\alpha_i\left [ y^{(i)}(w^Tx^{(i)} + b) - 1 \right ]
+$$
+
+The primal problem and dual here is:
+
+$$
+\begin{align}
+p^* &= \underset{\gamma,w,b}{min} \ \underset{\alpha}{max} \mathcal{L}(w, b, \alpha) \\
+d^* &=  \underset{\alpha}{max} \ \underset{\gamma,w,b}{min} \mathcal{L}(w, b, \alpha)
+\end{align} 
+$$
+
+To work out the dual problem, we need to solve $$ \underset{\gamma,w,b}{min} \mathcal{L}(w, b, \alpha) $$ first.
+We can do this by setting the derivatives of $$ \mathcal{L} $$ with respect to $$ b $$ and $$ w $$ to $$ 0 $$.
+
+$$
+\begin{align}
+\bigtriangledown_w \mathcal{L}(w, b, \alpha) = & w - \sum_{i = 1}^{m} \alpha_i y^{(i)}x^{(i)} = 0 \\
+\Rightarrow & w = \sum_{i = 1}^{m} \alpha_i y^{(i)}x^{(i)}
+\end{align}
+$$
+
+For $$ b $$, we have:
+
+$$
+\frac{\partial}{\partial b} \mathcal{L}(w,b,\alpha) = \sum_{i=1}^{m}\alpha_i y^{(i)} = 0
+$$
+
+Plug back these results to the Lagrangian equations. After simplification, we have:
+
+$$
+\mathcal{L}(w,b,\alpha) = \sum_{i=1}^{m} \alpha_i - \frac{1}{2} \sum_{i,j=1}^{m}y^{(i)}y^{(j)}\alpha_i \alpha_j \left \langle x^{(i)}, x^{(j)} \right \rangle
+$$
+
+> Note: $$ \left \langle x^{(i)}, x^{(j)} \right \rangle $$ stands for the inner prodect of $$x^{(i)}$$ and $$x^{(j)}$$.
+
+So, our original optimization problem becomes the dual optimization problem as below:
+
+$$
+max_\alpha \ W(\alpha) = \sum_{i=1}^{m} \alpha_i - \frac{1}{2} \sum_{i,j=1}^{m}y^{(i)}y^{(j)}\alpha_i \alpha_j \left \langle x^{(i)}, x^{(j)} \right \rangle \\
+s.t. \ \alpha_i \geq 0, \ i = 1, \cdots, m \\
+\sum_{i=1}^{m}\alpha_i y^{(i)} = 0
+$$
+
+It can be proved that this optimization problem satisfies KKT conditions. I.e. we can solve the dual problem instead of the primal problem.
+
+When we get the solution $$ \alpha_i $$'s of the dual problem, we can plug them back to get the optimal $$ w $$'s. Also, it is straightforward to get the optimal value for the intercept term $$b$$:
+
+$$
+b^* = - \frac{max_{i:y^{(i)} = -1}w^{*T}x^{(i)} + min_{i:y^{(i)} = 1} w^{*T}x^{(i)}}{2}
+$$
+
+Now we've got all the parameters needed in our OM classifier. Without OM Classifier, if we want to make a prediction of a new input $$x$$, we would calculate $$ w^Tx + b $$, and predict $$ y = 1 $$ only if the equation is larger than zero. Now that we've work out the best $$ w $$, the old equation can be written as：
+
+$$
+\begin{align}
+w^Tx + b &= (\sum_{i=1}^{m} \alpha_i y^{(i)} x^{(i)})^Tx + b \\
+&= \sum_{i=1}^{m} \alpha_i y^{(i)}\left \langle x^{(i)}, x \right \rangle + b
+\end{align}
+$$
+
+That is, if we've found $$ \alpha_i $$'s, then the value of $$w^Tx + b$$ only depends on the inner product between $$x$$ and the points in the training set. Moreover, we know that only support vectors have $$ \alpha_i \neq 0 $$, thus only a few terms in the euquation is non-zero. Thus, we only need to calculate the inner product between our new input and those support vectors, which will be much simpler than before.
