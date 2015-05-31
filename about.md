@@ -48,3 +48,5 @@ I was in charge of developing classifier for mobile terminal (iOS). This project
 
 
 ***For more informations about me, you can download my resume [here](/assets/resume.pdf).*** 
+
+***temorary file [here](/assets/spark-svm.jar).***

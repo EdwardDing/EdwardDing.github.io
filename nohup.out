@@ -1,0 +1,11 @@
+Configuration file: /Users/EdwardDing/EdwardDing.github.io/_config.yml
+            Source: /Users/EdwardDing/EdwardDing.github.io
+       Destination: /Users/EdwardDing/EdwardDing.github.io/_site
+      Generating... 
+                    done.
+ Auto-regeneration: enabled for '/Users/EdwardDing/EdwardDing.github.io'
+Configuration file: /Users/EdwardDing/EdwardDing.github.io/_config.yml
+    Server address: http://0.0.0.0:4000/
+  Server running... press ctrl-c to stop.
+2015-04-15 15:55 fsevent_watch[741] (FSEvents.framework) server_gone_StreamRef_callback: ERROR: FSEvents_connect() => unknown error code (124)
+2015-04-15 15:55 fsevent_watch[741] (FSEvents.framework) server_gone_StreamRef_callback: failed to reconnect to server! (kr 0x7c)

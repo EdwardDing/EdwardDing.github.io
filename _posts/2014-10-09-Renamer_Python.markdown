@@ -5,6 +5,8 @@ categories: tutorial
 excerpt: A python script for bacth renamer files in Mac OSX.
 ---
 
+> Update: This post is only for those who are interested in using 
+
 This is just a simple script, but very helpful when you need to automatically rename a bunch of files, especially images from your camera.
 
 If you are a user, just read the first part of this post which is a `How to use` section and download the executable scirpt. If you are a programmer who want to dig out how to implement this, read the second part, which I will explain a little bit about the scirpt and provide a copy of my source code.
@@ -60,6 +62,8 @@ There is no step 3 :) When you've done all thing above, all the files already ha
 </div>
 
 ###Script and source code
+
+------------------------------ß
 
 The script is every easy to implement. Below are my source code:
 
